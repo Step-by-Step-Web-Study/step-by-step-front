@@ -1,5 +1,6 @@
 {
   "name": "step-by-step-front",
+  "homepage": "https://step-by-step-web-study.github.io/step-by-step-front/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
