@@ -1,10 +1,11 @@
 import './App.css'
+import { Page } from './stories/Page'
 
 
 function App() {
   return (
     <div className="App">
-      Test
+      <Page />
     </div>
   )
 }
