@@ -1,13 +1,12 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
-import * as React from 'react'
 import SideToolbar from '../layout/SideToolbar'
 import { Box } from '@mui/material'
 import UserInterestList from './UserInterestList'
+import { jobMenus } from './JobPage'
 
-export default function Job() {
+export default function UserInterestPage(): JSX.Element {
   return (
     <Box sx={{ display: 'flex', width: '90%', margin: '0 auto' }}>
-      <SideToolbar />
+      <SideToolbar menus={jobMenus} />
       <UserInterestList />
     </Box>
   )

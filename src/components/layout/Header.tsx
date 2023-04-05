@@ -75,6 +75,9 @@ export default function ButtonAppBar(): React.ReactElement {
           <Button color="inherit" onClick={(): void => navigate('/job')}>
             Job
           </Button>
+          <Button color="inherit" onClick={(): void => navigate('/mynetwork')}>
+            Network
+          </Button>
           {loggedIn}
         </Toolbar>
       </AppBar>

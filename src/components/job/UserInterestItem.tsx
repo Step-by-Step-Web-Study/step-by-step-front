@@ -1,15 +1,12 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable no-undef */
-/* eslint-disable @typescript-eslint/camelcase */
-import * as React from 'react'
-import ListItem from '@mui/material/ListItem'
-import Divider from '@mui/material/Divider'
-import ListItemText from '@mui/material/ListItemText'
-import ListItemAvatar from '@mui/material/ListItemAvatar'
-import Avatar from '@mui/material/Avatar'
-import Typography from '@mui/material/Typography'
-import IconButton from '@mui/material/IconButton'
 import StarIcon from '@mui/icons-material/Star'
+import Avatar from '@mui/material/Avatar'
+import Divider from '@mui/material/Divider'
+import IconButton from '@mui/material/IconButton'
+import ListItem from '@mui/material/ListItem'
+import ListItemAvatar from '@mui/material/ListItemAvatar'
+import ListItemText from '@mui/material/ListItemText'
+import Typography from '@mui/material/Typography'
+import { useState } from 'react'
 import { JobItemType } from './DummyList'
 
 interface JobInterestItemProps {
@@ -19,7 +16,7 @@ interface JobInterestItemProps {
 export default function UserInterestItem({ item }: JobInterestItemProps): React.ReactElement {
   const { conm, regymd, ddlnymd, dutycn } = item
 
-  const [like, setLike] = React.useState(false)
+  const [like, setLike] = useState(false)
   const handleLike = (): void => setLike(!like)
 
   return (
@@ -40,7 +37,7 @@ export default function UserInterestItem({ item }: JobInterestItemProps): React.
             </>
           }
         />
-        <IconButton aria-label="delete" onClick={handleLike} color={like ? 'inherit' : 'primary'}>
+        <IconButton aria-label="add to favorites" onClick={handleLike} color={like ? 'inherit' : 'primary'}>
           <StarIcon sx={{ fontSize: 35 }} />
         </IconButton>
       </ListItem>

@@ -1,29 +1,33 @@
-import * as React from 'react'
+import { TextField } from '@material-ui/core'
+import SearchIcon from '@mui/icons-material/Search'
+import CircularProgress from '@mui/material/CircularProgress'
+import IconButton from '@mui/material/IconButton'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
+import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../store'
+import { JobItemType } from '../../store/jobSlice'
 import JobItem from './JobItem'
-import { TextField } from '@material-ui/core'
-import SearchIcon from '@mui/icons-material/Search'
-import IconButton from '@mui/material/IconButton'
-import CircularProgress from '@mui/material/CircularProgress'
-import { dummyData } from './DummyList'
 
+// const JobList: React.FC = () => {
 export default function JobList(): React.ReactElement {
-  const data = dummyData
-
-  const [inputVal, setInputVal] = React.useState('')
+  const [inputVal, setInputVal] = useState('')
   const searchList = (): void => {
     console.log(inputVal)
   }
-  const [loading, setLoading] = React.useState(true)
-  React.useEffect(() => {
+  const [loading, setLoading] = useState(true)
+  const jobs = useSelector((state: RootState) => state.job.jobList)
+  const [jobList, setJobList] = useState<JobItemType[] | null>([])
+  useEffect(() => {
+    setJobList(jobs)
     setLoading(false)
   }, [])
-  
+
   return (
     <TableContainer sx={{ width: '100%', marginLeft: '2rem', marginTop: '2rem' }}>
       <h3 style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>채용공고 검색</h3>
@@ -32,13 +36,11 @@ export default function JobList(): React.ReactElement {
         placeholder="검색어를 입력하세요."
         id="search"
         onChange={(e): void => setInputVal(e.target.value)}
-        // sx={{ margin: '2rem 0 1rem 1rem' }}
         style={{ margin: '2rem 0 1rem 1rem' }}
         InputProps={{
           endAdornment: (
             <IconButton onClick={searchList}>
               <SearchIcon style={{ fontSize: '35px' }} />
-              {/* <SearchIcon sx={{ fontSize: 35 }} edge="end" /> */}
             </IconButton>
           ),
         }}
@@ -68,8 +70,8 @@ export default function JobList(): React.ReactElement {
           </TableBody>
         ) : (
           <TableBody>
-            {data.map((item, index) => (
-              <JobItem key={index} propsItem={item} />
+            {jobList?.map(item => (
+              <JobItem key={item.no} propsItem={item} />
             ))}
           </TableBody>
         )}
@@ -77,5 +79,3 @@ export default function JobList(): React.ReactElement {
     </TableContainer>
   )
 }
-
-

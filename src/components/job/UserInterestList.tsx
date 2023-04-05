@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { useState, useEffect } from 'react'
 import List from '@mui/material/List'
 import { Box } from '@mui/material'
 import UserInterestItem from './UserInterestItem'
@@ -7,8 +7,8 @@ import { dummyData } from './DummyList'
 
 export default function UserInterestList(): React.ReactElement {
   const data = dummyData
-  const [loading, setLoading] = React.useState(true)
-  React.useEffect(() => {
+  const [loading, setLoading] = useState(true)
+  useEffect(() => {
     setLoading(false)
   }, [])
 
