@@ -2,10 +2,12 @@ import { configureStore } from '@reduxjs/toolkit'
 import { combineReducers } from 'redux'
 import { persistReducer } from 'redux-persist'
 import localStorage from 'redux-persist/es/storage'
+import jobSlice from './jobSlice'
 import loginSlice from './loginSlice'
 
 const rootReducer = combineReducers({
   login: loginSlice.reducer,
+  job: jobSlice.reducer,
 })
 
 const persistConfig = {
