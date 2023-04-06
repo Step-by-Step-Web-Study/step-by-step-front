@@ -1,30 +1,30 @@
-import { createAsyncThunk, createSlice, current } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import instance from '../util/http'
 
-export const actionGetJobList = createAsyncThunk('/api/company', async (payload: string) => {
+export const actionPostLikeCompany = createAsyncThunk('postCompany', async (payload: string | null) => {
   console.log(payload)
-  const response = await instance.get(`/api/company?${payload}`)
+  const params = {
+    companyName: payload,
+    likeUserId: 'aTest1@test.com',
+  }
+  // const response = await instance.post(`/api/company/${payload}`)
+  // const response = await instance.post('/api/company/강남재가요양센터', params)
+  const response = await instance.post(`/api/company`, params)
+  // const response = await instance.post(`/api/company/${payload}`, params)
+  // const response = await instance.get('/api/follow/unFollowList')
   console.log(response)
   return response.data
 })
-interface JobState {
-  jobList?: object[]
-}
-export interface JobItemType {
-  companyName: string | null
-  content: string | null
-  contract: string | null
-  educationalBackground: string | null
-  intake: string | null
-  no: string | null
-  recruitmentProcess: string | null
-  salary: string | null
-  title: string | null
-  workingConditions: string | null
-  likeFlag: number | null
-  regDate: number | null
-  endDate: number | null
-}
+export const actionDeleteLikeCompany = createAsyncThunk('deleteCompany', async (payload: string | null) => {
+  console.log(payload)
+  const params = {
+    companyName: payload,
+    likeUserId: 'aTest1@test.com',
+  }
+  const response = await instance.delete(`/api/company/${payload}`, { data: params })
+  console.log(response)
+  return response.data
+})
 
 const initialState = {
   jobList: [],
@@ -36,15 +36,11 @@ const jobSlice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder
-      .addCase(actionGetJobList.pending, (state: JobState, action) =>
-        console.log('펜딩', current(state), action.payload),
-      )
-      .addCase(actionGetJobList.fulfilled, (state: JobState, action) => {
+      .addCase(actionPostLikeCompany.pending, (state, action) => console.log('펜딩', action.payload))
+      .addCase(actionPostLikeCompany.fulfilled, (state, action) => {
         console.log('풀필드', action.payload)
-        const filteredItem = action.payload.filter((item: JobItemType) => Object.keys(item).includes('no'))
-        state.jobList = filteredItem
       })
-      .addCase(actionGetJobList.rejected, (state: JobState, action) => console.log('리젝트', current(state), action))
+      .addCase(actionPostLikeCompany.rejected, (state, action) => console.log('리젝트', action))
   },
 })
 

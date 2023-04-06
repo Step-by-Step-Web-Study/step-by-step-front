@@ -10,11 +10,15 @@ import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
 import Typography from '@mui/material/Typography'
 import { useState } from 'react'
-import { JobItemType } from '../../store/jobSlice'
+import { useDispatch } from 'react-redux'
+import store from '../../store'
+import { actionDeleteLikeCompany, actionPostLikeCompany } from '../../store/jobSlice'
+import { JobItemType } from './JobList'
 
 interface JobItemProps {
   propsItem: JobItemType
 }
+export type AppDispatch = typeof store.dispatch
 
 export default function JobItem({ propsItem }: JobItemProps): React.ReactElement {
   const {
@@ -32,13 +36,27 @@ export default function JobItem({ propsItem }: JobItemProps): React.ReactElement
     title,
     workingConditions,
   }: JobItemType = propsItem
-
+  const dispatch = useDispatch<AppDispatch>()
   const [open, setOpen] = useState(false)
   const [like, setLike] = useState(likeFlag === 0 ? false : true)
-  const handleLike = (): void => setLike(!like)
+  const handleLike = async (): Promise<void> => {
+    setLike(!like)
+    const param = companyName
+    if (!like) {
+      console.log(param)
+      // const params = {
+      //   companyName: '강남재가요양센터',
+      //   likeUserId: 'aTest1@test.com',
+      // }
+      // await dispatch(actionPostLikeCompany(objectToQuerystring(params)))
+      await dispatch(actionPostLikeCompany(param))
+    } else {
+      await dispatch(actionDeleteLikeCompany(param))
+    }
+  }
   const handleToggle = (): void => setOpen(!open)
 
-  const unixTimeHandle = (time: number | null) => {
+  const unixTimeHandle = (time: number) => {
     // const date = new Date(time * 1000)
     const date = time !== null ? new Date(time * 1000) : new Date()
     const year = date.getFullYear()
